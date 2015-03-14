@@ -3,9 +3,8 @@
 #include <QDebug>
 
 Circuit::Circuit(QString FilePath)
-    : ModuleRegex("module(?:\\s+)([_a-zA-z][_a-zA-Z1-9]*)(\\(.*\\));")
-    //
-    , WireRegex("(wire|input|output)(?:\\s+)(\\[\\d+\:\\d+\\])?([_a-zA-z][_a-zA-Z0-9]*);"){
+    : ModuleRegex("module(?:\\s+)([_a-zA-z][_a-zA-Z1-9]*)\\((.*)\\);")
+    , WireRegex("(wire|input|output)(?:\\s+)(?:\\[(\\d+)\\:(\\d+)\\])?(?:\\s*)([_a-zA-z][_a-zA-Z0-9]*);"){
     Parse(FilePath);
 }
 
@@ -24,16 +23,16 @@ void Circuit::Parse(QString FilePath){
         case ParseState_Module:
             if(WireRegex.indexIn(str) != -1){
                 QStringList cap = WireRegex.capturedTexts();
-                qDebug() << cap;
-                qDebug() << "Yaay found wire";
+                qDebug() << "Wire: " << cap;
                 str = "";
             }
             break;
         case ParseState_None:
             if(ModuleRegex.indexIn(str) != -1){
                 QStringList cap = ModuleRegex.capturedTexts();
-                qDebug() << cap;
-                qDebug() << "Yaay found module";
+                qDebug() << "Module: " << cap;
+                ModuleName = cap[1];
+                //ModulePinList[0];
                 ParseState = ParseState_Module;
                 str = "";
             }

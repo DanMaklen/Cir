@@ -12,3 +12,7 @@ Graphic Utilities/Libraries:
 
 Description:
 	The project reads a verilog netlist file and draw an equivalent circut on the screen or export the circit to a png or other image files.
+
+Assumptions:
+	-Correct File
+	-And input port is drived by exactly one gate.

@@ -3,7 +3,7 @@
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), cir("D:\\Projects\\CirBox\\Resources\\booth.g.v"){
+    : QMainWindow(parent), ui(new Ui::MainWindow), cir("/home/danmaklen/Desktop/DanMaklen/Projects/CirBox/Resources/booth.g.v"){
     ui->setupUi(this);
 }
 
