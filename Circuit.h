@@ -4,23 +4,26 @@
 #include <QRegExp>
 #include <QList>
 #include <QPair>
+#include <QMap>
 
 class Node{
 public:
     enum GateType{
         InputWire, OutputWire, Wire,
         INVX1, NOR2X1, XOR2X1, AND2X2} MyType;
-    //QList<int> InputList;     //Probably not needed
+    //QList<int> InputLiust;     //Probably not needed
+    QString Name;
+    int nInputs;
     QList<int> OutputList;
+    bool operator<(const Node&) const;
 };
-
+QDebug& operator<<(QDebug&, const Node&);
 class Circuit{
-    enum ParseStateID{ParseState_None, ParseState_MultiLineComment, ParseState_Module};
-    ParseStateID ParseState;
     QString ModuleName;
-    int nWires;
     QList<Node> NetList;
-    QList<QPair<int, int> > EqList;
+    QList<Node> SimNetList;
+    QList<QPair<int, int> > EqList; //Assign stuff
+    QMap<QString, int> WireIndex;
     
     QRegExp ModuleRegex;
     QRegExp AssignRegex;
@@ -28,6 +31,7 @@ class Circuit{
     QRegExp WireRegex;
     
     void Parse(QString FilePath);
+    void ParseComp(QString str);
     void SimplifyNetList();
 public:
     Circuit(QString);
