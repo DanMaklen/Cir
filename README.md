@@ -14,5 +14,11 @@ Description:
 	The project reads a verilog netlist file and draw an equivalent circut on the screen or export the circit to a png or other image files.
 
 Assumptions:
-	-Correct File
+	-Correct File.
 	-And input port is drived by exactly one gate.
+
+Limitations:
+	-Only few standard cells are implemented and supported.
+	-No Standard cells of multiple outputs are supported.
+	-No Standard cells of buss inputs/outputs are supported.
+	-Busses are treated as multiple seprate wires.
