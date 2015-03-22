@@ -26,7 +26,7 @@ QList<QList<int> > Circuit::getLanes(){
     return Lanes;
 }
 
-void Circuit::Parse(QString FilePath){
+void Circuit::Parse(QString FilePath){  //General Parsing
     QFile file(FilePath);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) qDebug() << file.errorString();
     QTextStream fin(&file);
@@ -50,7 +50,7 @@ void Circuit::Parse(QString FilePath){
     for(int i = 1; i < lines.size() - 1; i++)
         ParseComp(lines[i]);
 }
-void Circuit::ParseComp(QString str){
+void Circuit::ParseComp(QString str){   //Parse 1 component inside the module
     Node temp;
     if(WireRegex.indexIn(str) != -1){    //isWire?
         QStringList cap = WireRegex.capturedTexts();
@@ -96,7 +96,7 @@ void Circuit::ParseComp(QString str){
             }
     }
 }
-void Circuit::SimplifyNetList(){
+void Circuit::SimplifyNetList(){    //Handels Equivalence Lists, and remove wires by propagating OutputLists and nInputs values.
     for(int i = 0; i < EqList.size(); i++){ //EqList
         if(NetList[EqList[i].first].MyType == Node::Wire){
             for(int j = i + 1; j < EqList.size(); j++){
@@ -135,9 +135,9 @@ void Circuit::SimplifyNetList(){
     }
 }
 
-void Circuit::ProcessLanes(){
+void Circuit::ProcessLanes(){   //Topological Sort to define Levels between Gates.
     QQueue<int> Q;
-    Q.enqueue(-1);
+    Q.enqueue(-1);  //-1 is a sperator between Levels or Lanes
     for(int i = 0; i < NetList.size(); i++)
         if(NetList[i].nInputs == 0)
             Q.enqueue(i);

@@ -6,7 +6,7 @@
 #include <QPair>
 #include <QMap>
 
-class Node{
+class Node{ //Place holder of the information of any Gate or Wire supported.
 public:
     enum GateType{
         InputWire, OutputWire, Wire,
@@ -21,10 +21,10 @@ public:
 QDebug& operator<<(QDebug&, const Node&);
 class Circuit{
     QString ModuleName;
-    QList<Node> NetList;
+    QList<Node> NetList;    //Holds the values of the Gates and Wires of the NetList as well as their connections.
     QList<QPair<int, int> > EqList; //Assign stuff
-    QMap<QString, int> WireIndex;
-    QList<QList<int> > Lanes;
+    QMap<QString, int> WireIndex;   //Map between Wire Name and WireIndex
+    QList<QList<int> > Lanes;   //Holds the ordering of the NetList.
     
     QRegExp ModuleRegex;
     QRegExp AssignRegex;
